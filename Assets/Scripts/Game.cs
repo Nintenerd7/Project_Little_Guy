@@ -13,6 +13,7 @@ public class Game : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        #region load pet happiness and hunger
         if (PlayerPrefs.HasKey("PetHappiness"))
         {
             float savedHappiness = PlayerPrefs.GetFloat("PetHappiness");
@@ -47,6 +48,7 @@ public class Game : MonoBehaviour
         {
             petHunger = 0.5f;
         }
+        #endregion
         #region Pet hunger while offline
         if (PlayerPrefs.HasKey("TimeClosed"))
         {
