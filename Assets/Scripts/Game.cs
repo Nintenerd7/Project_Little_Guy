@@ -17,6 +17,14 @@ public class Game : MonoBehaviour
         {
             float savedHappiness = PlayerPrefs.GetFloat("PetHappiness");
             petHappiness = savedHappiness;
+            if (petHappiness <= 0)
+            {
+                petHappiness = 0;
+            }
+            else if (petHappiness >= 1)
+            {
+                petHappiness = 1;
+            }
         }
         else
         {
@@ -26,6 +34,14 @@ public class Game : MonoBehaviour
         {
             float savedHunger = PlayerPrefs.GetFloat("PetHunger");
             petHunger = savedHunger;
+            if (petHunger <= 0)
+            {
+                petHunger = 0;
+            }
+            else if (petHunger >= 1)
+            {
+                petHunger = 1;
+            }
         }
         else
         {
@@ -66,7 +82,7 @@ public class Game : MonoBehaviour
         DateTime timeClosed = DateTime.Parse(timeSaved);
         Debug.Log("Parsed Time: " + timeClosed);
         TimeSpan timeChange = DateTime.Now - timeClosed;
-        return input -= (float)timeChange.TotalHours;
+        return input -= (float)timeChange.TotalHours/10;
     }
 
     public void FoodButton()
