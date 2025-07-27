@@ -12,6 +12,9 @@ public class Game : MonoBehaviour
     public TMP_Text petHappinessTxt;
     public TextPrint textPrint;
     [SerializeField] GameObject pet;
+    public int petType;
+    public Sprite[] happyPets;
+    public Sprite[] sadPets;
 
     //Animation Stuff
     Animator petExpression;
@@ -19,7 +22,17 @@ public class Game : MonoBehaviour
     void Start()
     {
         petExpression = pet.GetComponent<Animator>();
-
+        if (PlayerPrefs.HasKey("PetType"))
+        {
+            int savedType = PlayerPrefs.GetInt("PetType");
+            petType = savedType;
+            SetPet();
+        }
+        else
+        {
+            petType = 0;
+            SetPet();
+        }
         #region load pet happiness and hunger
         if (PlayerPrefs.HasKey("PetHappiness"))
         {
@@ -72,6 +85,16 @@ public class Game : MonoBehaviour
         {
             petHunger = 1;
         }
+
+        if (petHappiness <= 0.3f || petHunger <= 0.3f)
+        {
+            SetSad();
+        }
+        else
+        {
+            SetPet();
+        }
+
         UpdateText();
     }
 
@@ -80,6 +103,7 @@ public class Game : MonoBehaviour
         PlayerPrefs.SetString("TimeClosed", DateTime.Now.ToString());
         PlayerPrefs.SetFloat("PetHunger", petHunger);
         PlayerPrefs.SetFloat("PetHappiness", petHappiness);
+        PlayerPrefs.SetInt("PetType", petType);
         PlayerPrefs.Save();
     }
 
@@ -90,29 +114,13 @@ public class Game : MonoBehaviour
         DateTime timeClosed = DateTime.Parse(timeSaved);
         Debug.Log("Parsed Time: " + timeClosed);
         TimeSpan timeChange = DateTime.Now - timeClosed;
-        return input -= (float)timeChange.TotalHours/10;
+        return input -= (float)timeChange.TotalHours / 10;
     }
 
     public void FoodButton()
     {
         petHunger += 0.25f;
         petHappiness += 0.1f;
-        //if (petHunger <= 0)
-        //{
-        //    petHunger = 0;
-        //}
-        //else if (petHunger >= 1)
-        //{
-        //    petHunger = 1;
-        //}
-        //if (petHappiness <= 0)
-        //{
-        //    petHappiness = 0;
-        //}
-        //else if (petHappiness >= 1)
-        //{
-        //    petHappiness = 1;
-        //}
         Debug.Log("Pet Hunger: " + petHunger);
         Debug.Log("Pet Happiness: " + petHappiness);
         petHappinessTxt.text = "Pet Mood: " + (Mathf.Round(petHappiness * 100)).ToString() + "%";
@@ -131,6 +139,7 @@ public class Game : MonoBehaviour
             petExpression.SetBool("isHappy", true);
             petExpression.SetBool("isSad", false);
             textPrint.typingText = textPrint.phrases[0];
+            SetPet();
             textPrint.PrintText();
         }
         else if (petHappiness <= 0.3f || petHunger <= 0.3f)
@@ -138,6 +147,7 @@ public class Game : MonoBehaviour
             petExpression.SetBool("isHappy", false);
             petExpression.SetBool("isSad", true);
             textPrint.typingText = textPrint.phrases[2];
+            SetSad();
             textPrint.PrintText();
         }
         else
@@ -145,8 +155,58 @@ public class Game : MonoBehaviour
             petExpression.SetBool("isHappy", false);
             petExpression.SetBool("isSad", false);
             textPrint.typingText = textPrint.phrases[1];
+            SetPet();
             textPrint.PrintText();
         }
 
+    }
+    void SetPet()
+    {
+        switch (petType)
+        {
+            case 0:
+                pet.GetComponent<SpriteRenderer>().sprite = happyPets[0];
+                break;
+            case 1:
+                pet.GetComponent<SpriteRenderer>().sprite = happyPets[1];
+                break;
+            case 2:
+                pet.GetComponent<SpriteRenderer>().sprite = happyPets[2];
+                break;
+            case 3:
+                pet.GetComponent<SpriteRenderer>().sprite = happyPets[3];
+                break;
+            case 4:
+                pet.GetComponent<SpriteRenderer>().sprite = happyPets[4];
+                break;
+            case 5:
+                pet.GetComponent<SpriteRenderer>().sprite = happyPets[5];
+                break;
+        }
+    }
+
+    void SetSad()
+    {
+        switch (petType)
+        {
+            case 0:
+                pet.GetComponent<SpriteRenderer>().sprite = sadPets[0];
+                break;
+            case 1:
+                pet.GetComponent<SpriteRenderer>().sprite = sadPets[1];
+                break;
+            case 2:
+                pet.GetComponent<SpriteRenderer>().sprite = sadPets[2];
+                break;
+            case 3:
+                pet.GetComponent<SpriteRenderer>().sprite = sadPets[3];
+                break;
+            case 4:
+                pet.GetComponent<SpriteRenderer>().sprite = sadPets[4];
+                break;
+            case 5:
+                pet.GetComponent<SpriteRenderer>().sprite = sadPets[5];
+                break;
+        }
     }
 }
