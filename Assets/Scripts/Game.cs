@@ -10,6 +10,7 @@ public class Game : MonoBehaviour
     public float petHappiness;
     public TMP_Text petHungerTxt;
     public TMP_Text petHappinessTxt;
+    public TextPrint textPrint;
     [SerializeField] GameObject pet;
 
     //Animation Stuff
@@ -125,20 +126,26 @@ public class Game : MonoBehaviour
     }
     void PlayPetExpression()
     {
-        if(petHappiness >= 0.8f || petHunger >= 0.8f)
+        if (petHappiness >= 0.8f || petHunger >= 0.8f)
         {
             petExpression.SetBool("isHappy", true);
             petExpression.SetBool("isSad", false);
+            textPrint.typingText = textPrint.phrases[0];
+            textPrint.PrintText();
         }
-        else if(petHappiness <= 0.3f || petHunger <= 0.3f)
+        else if (petHappiness <= 0.3f || petHunger <= 0.3f)
         {
             petExpression.SetBool("isHappy", false);
             petExpression.SetBool("isSad", true);
+            textPrint.typingText = textPrint.phrases[2];
+            textPrint.PrintText();
         }
         else
         {
             petExpression.SetBool("isHappy", false);
             petExpression.SetBool("isSad", false);
+            textPrint.typingText = textPrint.phrases[1];
+            textPrint.PrintText();
         }
 
     }
