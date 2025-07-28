@@ -98,7 +98,7 @@ public class Game : MonoBehaviour
         UpdateText();
     }
 
-    public void OnApplicationPause()
+    public void OnApplicationQuit()
     {
         PlayerPrefs.SetString("TimeClosed", DateTime.Now.ToString());
         PlayerPrefs.SetFloat("PetHunger", petHunger);
