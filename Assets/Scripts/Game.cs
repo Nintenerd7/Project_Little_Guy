@@ -10,18 +10,38 @@ public class Game : MonoBehaviour
     public float petHappiness;
     public TMP_Text petHungerTxt;
     public TMP_Text petHappinessTxt;
+    public TMP_Text coinsTxt;
+    public TMP_Text shopCoinsTxt;
+    public TMP_Text description;
     public TextPrint textPrint;
     [SerializeField] GameObject pet;
     public int petType;
     public Sprite[] happyPets;
     public Sprite[] sadPets;
+    public static int coins;
+
+    //Shop Stuff
+    [SerializeField] GameObject shop;
+    [SerializeField] GameObject mainUI;
 
     //Animation Stuff
     Animator petExpression;
+    Animator shopTransitions;
     // Start is called before the first frame update
     void Start()
     {
+        #region load pet type
+        if(PlayerPrefs.HasKey("Coins"))
+        {
+            int savedCoins = PlayerPrefs.GetInt("Coins");
+            coins = savedCoins;
+        }
+        else
+        {
+            coins = 100;
+        }
         petExpression = pet.GetComponent<Animator>();
+        shopTransitions = shop.GetComponent<Animator>();
         if (PlayerPrefs.HasKey("PetType"))
         {
             int savedType = PlayerPrefs.GetInt("PetType");
@@ -33,6 +53,7 @@ public class Game : MonoBehaviour
             petType = 0;
             SetPet();
         }
+        #endregion
         #region load pet happiness and hunger
         if (PlayerPrefs.HasKey("PetHappiness"))
         {
@@ -104,6 +125,7 @@ public class Game : MonoBehaviour
         PlayerPrefs.SetFloat("PetHunger", petHunger);
         PlayerPrefs.SetFloat("PetHappiness", petHappiness);
         PlayerPrefs.SetInt("PetType", petType);
+        PlayerPrefs.SetInt("Coins", coins);
         PlayerPrefs.Save();
     }
 
@@ -123,14 +145,16 @@ public class Game : MonoBehaviour
         petHappiness += 0.1f;
         Debug.Log("Pet Hunger: " + petHunger);
         Debug.Log("Pet Happiness: " + petHappiness);
-        petHappinessTxt.text = "Pet Mood: " + (Mathf.Round(petHappiness * 100)).ToString() + "%";
-        petHungerTxt.text = "Pet Hunger: " + (Mathf.Round(petHunger * 100)).ToString() + "%";
+        petHappinessTxt.text = (Mathf.Round(petHappiness * 100)).ToString() + "%";
+        petHungerTxt.text = (Mathf.Round(petHunger * 100)).ToString() + "%";
     }
 
     void UpdateText()
     {
-        petHappinessTxt.text = "Pet Mood: " + (Mathf.Round(petHappiness * 100)).ToString() + "%";
-        petHungerTxt.text = "Pet Hunger: " + (Mathf.Round(petHunger * 100)).ToString() + "%";
+        petHappinessTxt.text = (Mathf.Round(petHappiness * 100)).ToString() + "%";
+        petHungerTxt.text = (Mathf.Round(petHunger * 100)).ToString() + "%";
+        coinsTxt.text = coins.ToString();
+        shopCoinsTxt.text = coins.ToString();
     }
     void PlayPetExpression()
     {
@@ -208,5 +232,22 @@ public class Game : MonoBehaviour
                 pet.GetComponent<SpriteRenderer>().sprite = sadPets[5];
                 break;
         }
+    }
+
+    public void OpenShop()
+    {
+        mainUI.SetActive(false);
+        description.text = "";
+        shopTransitions.SetBool("isShopOpen", true);
+        shopTransitions.SetBool("isShopClosed", false);
+        mainUI.SetActive(false);
+        shop.SetActive(true);
+    }
+
+    public void CloseShop()
+    {
+        mainUI.SetActive(true);
+        shopTransitions.SetBool("isShopOpen", false);
+        shopTransitions.SetBool("isShopClosed", true);
     }
 }
