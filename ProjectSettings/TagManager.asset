@@ -44,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Slots
+    uniqueID: 1616577047
+    locked: 0
   - name: Bars
     uniqueID: 4149551067
     locked: 0
