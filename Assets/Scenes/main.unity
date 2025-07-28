@@ -449,9 +449,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Status
-
-'
+  m_text: Shop
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eda092cf65aaeff448fef6187140b8fa, type: 2}
   m_sharedMaterial: {fileID: -8230974635534828263, guid: eda092cf65aaeff448fef6187140b8fa, type: 2}
@@ -1587,7 +1585,7 @@ GameObject:
   - component: {fileID: 1859284793}
   - component: {fileID: 1859284792}
   m_Layer: 5
-  m_Name: Btn_Status
+  m_Name: Btn_Shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
