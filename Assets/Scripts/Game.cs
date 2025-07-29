@@ -195,16 +195,7 @@ public class Game : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        PlayerPrefs.SetString("TimeClosed", DateTime.Now.ToString());
-        PlayerPrefs.SetFloat("PetHunger", petHunger);
-        PlayerPrefs.SetFloat("PetHappiness", petHappiness);
-        PlayerPrefs.SetInt("PetType", petType);
-        PlayerPrefs.SetInt("Coins", coins);
-        PlayerPrefs.SetInt("Pancakes", food.foodsOwned[0]);
-        PlayerPrefs.SetInt("Popcorn", food.foodsOwned[1]);
-        PlayerPrefs.SetInt("Slush", food.foodsOwned[2]);
-        PlayerPrefs.SetInt("Sundae", food.foodsOwned[3]);
-        PlayerPrefs.Save();
+        Save();
     }
 
     float OfflineCalculations(float input)
@@ -357,5 +348,19 @@ public class Game : MonoBehaviour
             shopMoodPercent[i].text = (Mathf.Round(food.moodRecovery[i] * 100)).ToString() + "%";
             shopCost[i].text = food.cost[i].ToString();
         }
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetString("TimeClosed", DateTime.Now.ToString());
+        PlayerPrefs.SetFloat("PetHunger", petHunger);
+        PlayerPrefs.SetFloat("PetHappiness", petHappiness);
+        PlayerPrefs.SetInt("PetType", petType);
+        PlayerPrefs.SetInt("Coins", coins);
+        PlayerPrefs.SetInt("Pancakes", food.foodsOwned[0]);
+        PlayerPrefs.SetInt("Popcorn", food.foodsOwned[1]);
+        PlayerPrefs.SetInt("Slush", food.foodsOwned[2]);
+        PlayerPrefs.SetInt("Sundae", food.foodsOwned[3]);
+        PlayerPrefs.Save();
     }
 }
