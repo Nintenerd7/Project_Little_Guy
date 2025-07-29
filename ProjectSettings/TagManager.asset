@@ -7,6 +7,7 @@ TagManager:
   - Yellow
   - Orange
   - Red
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -49,4 +50,7 @@ TagManager:
     locked: 0
   - name: Bars
     uniqueID: 4149551067
+    locked: 0
+  - name: Pet
+    uniqueID: 4041924937
     locked: 0

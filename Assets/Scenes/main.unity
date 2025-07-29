@@ -1221,7 +1221,7 @@ GameObject:
   - component: {fileID: 311139159}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3270,6 +3270,7 @@ GameObject:
   - component: {fileID: 649782677}
   - component: {fileID: 649782676}
   - component: {fileID: 649782675}
+  - component: {fileID: 649782678}
   m_Layer: 5
   m_Name: Btn_Play
   m_TagString: Untagged
@@ -3341,7 +3342,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 649782676}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 649782678}
+        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
+        m_MethodName: LoadGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &649782676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3380,6 +3393,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 649782673}
   m_CullTransparentMesh: 1
+--- !u!114 &649782678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649782673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24532d4891254af4eb8069eede4fec12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &685318769
 GameObject:
   m_ObjectHideFlags: 0
@@ -5611,8 +5636,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 682551013
-  m_SortingLayer: 1
+  m_SortingLayerID: -253042359
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 02fe04c685a38f4479729bf984cb4a97, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

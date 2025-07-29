@@ -9,9 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/Title.unity
+    guid: de7a8f7a6aafa654bb959799259b96f1
+  - enabled: 1
     path: Assets/Scenes/PetSelection.unity
     guid: e3c910b8666f62c40b3bad942bae6c6d
   - enabled: 1
     path: Assets/Scenes/main.unity
     guid: 290ee3fabc55bf349bc57f244d36029a
+  - enabled: 1
+    path: Assets/Scenes/Pachinko_Game.unity
+    guid: 3a94afae08ba6704c9ae517f933cdad8
   m_configObjects: {}

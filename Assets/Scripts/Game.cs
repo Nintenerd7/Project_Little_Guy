@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Game : MonoBehaviour
@@ -35,142 +36,161 @@ public class Game : MonoBehaviour
     Animator petExpression;
     Animator shopTransitions;
     Animator foodTransitions;
+
     // Start is called before the first frame update
     void Start()
     {
-        #region load pet type
-        if(PlayerPrefs.HasKey("Coins"))
+        if(SceneManager.GetActiveScene().name == "main")
         {
-            int savedCoins = PlayerPrefs.GetInt("Coins");
-            coins = savedCoins;
-        }
-        else
-        {
-            coins = 100;
-        }
-        petExpression = pet.GetComponent<Animator>();
-        shopTransitions = shop.GetComponent<Animator>();
-        foodTransitions = foodInv.GetComponent<Animator>();
-        if (PlayerPrefs.HasKey("PetType"))
-        {
-            int savedType = PlayerPrefs.GetInt("PetType");
-            petType = savedType;
-            SetPet();
-        }
-        else
-        {
-            petType = 0;
-            SetPet();
-        }
-        #endregion
-        #region load pet happiness and hunger
-        #region load foods
-        if(PlayerPrefs.HasKey("Pancakes"))
-        {
-            int savedPancakes = PlayerPrefs.GetInt("Pancakes");
-            food.foodsOwned[0] = savedPancakes;
-        }
-        else
-        {
-            food.foodsOwned[0] = 5;
-        }
+            #region load pet type
+            if(PlayerPrefs.HasKey("Coins"))
+            {
+                int savedCoins = PlayerPrefs.GetInt("Coins");
+                coins = savedCoins;
+            }
+            else
+            {
+                coins = 100;
+            }
+            petExpression = pet.GetComponent<Animator>();
+            shopTransitions = shop.GetComponent<Animator>();
+            foodTransitions = foodInv.GetComponent<Animator>();
+            if (PlayerPrefs.HasKey("PetType"))
+            {
+                int savedType = PlayerPrefs.GetInt("PetType");
+                petType = savedType;
+                SetPet();
+            }
+            else
+            {
+                petType = 0;
+                SetPet();
+            }
+            #endregion
+            #region load pet happiness and hunger
+            #region load foods
+            if(PlayerPrefs.HasKey("Pancakes"))
+            {
+                int savedPancakes = PlayerPrefs.GetInt("Pancakes");
+                food.foodsOwned[0] = savedPancakes;
+            }
+            else
+            {
+                food.foodsOwned[0] = 5;
+            }
 
-        if(PlayerPrefs.HasKey("Popcorn"))
-        {
-            int savedPopcorn = PlayerPrefs.GetInt("Popcorn");
-            food.foodsOwned[1] = savedPopcorn;
-        }
-        else
-        {
-            food.foodsOwned[1] = 5;
-        }
+            if(PlayerPrefs.HasKey("Popcorn"))
+            {
+                int savedPopcorn = PlayerPrefs.GetInt("Popcorn");
+                food.foodsOwned[1] = savedPopcorn;
+            }
+            else
+            {
+                food.foodsOwned[1] = 5;
+            }
 
-        if(PlayerPrefs.HasKey("Slush"))
-        {
-            int savedSlush = PlayerPrefs.GetInt("Slush");
-            food.foodsOwned[2] = savedSlush;
-        }
-        else
-        {
-            food.foodsOwned[2] = 0;
-        }
+            if(PlayerPrefs.HasKey("Slush"))
+            {
+                int savedSlush = PlayerPrefs.GetInt("Slush");
+                food.foodsOwned[2] = savedSlush;
+            }
+            else
+            {
+                food.foodsOwned[2] = 0;
+            }
 
-        if(PlayerPrefs.HasKey("Sundae"))
-        {
-            int savedSundae = PlayerPrefs.GetInt("Sundae");
-            food.foodsOwned[3] = savedSundae;
-        }
+            if(PlayerPrefs.HasKey("Sundae"))
+            {
+                int savedSundae = PlayerPrefs.GetInt("Sundae");
+                food.foodsOwned[3] = savedSundae;
+            }
 
-        else
-        {
-            food.foodsOwned[3] = 0;
-        }
+            else
+            {
+                food.foodsOwned[3] = 0;
+            }
 
-        #endregion
-        if (PlayerPrefs.HasKey("PetHappiness"))
-        {
-            float savedHappiness = PlayerPrefs.GetFloat("PetHappiness");
-            petHappiness = savedHappiness;
+            #endregion
+            if (PlayerPrefs.HasKey("PetHappiness"))
+            {
+                float savedHappiness = PlayerPrefs.GetFloat("PetHappiness");
+                petHappiness = savedHappiness;
+            }
+            else
+            {
+                petHappiness = 1f;
+            }
+            if (PlayerPrefs.HasKey("PetHunger"))
+            {
+                float savedHunger = PlayerPrefs.GetFloat("PetHunger");
+                petHunger = savedHunger;
+            }
+            else
+            {
+                petHunger = 0.5f;
+            }
+            #endregion
+            #region Pet hunger while offline
+            if (PlayerPrefs.HasKey("TimeClosed"))
+            {
+                petHunger = OfflineCalculations(petHunger);
+                petHappiness = OfflineCalculations(petHappiness);
+            }
+            PlayPetExpression();
+            Debug.Log("Pet Hunger: " + petHunger);
+            Debug.Log("Pet Happiness: " + petHappiness);
+            food.SetFoodTxt();
+            SetShopTxt();
+            UpdateText();
+            #endregion
         }
-        else
+        if(SceneManager.GetActiveScene().name == "Pachinko_Game")
         {
-            petHappiness = 1f;
+            if(PlayerPrefs.HasKey("Coins"))
+            {
+                int savedCoins = PlayerPrefs.GetInt("Coins");
+                coins = savedCoins;
+            }
+            else
+            {
+                coins = 100;
+            }
         }
-        if (PlayerPrefs.HasKey("PetHunger"))
-        {
-            float savedHunger = PlayerPrefs.GetFloat("PetHunger");
-            petHunger = savedHunger;
-        }
-        else
-        {
-            petHunger = 0.5f;
-        }
-        #endregion
-        #region Pet hunger while offline
-        if (PlayerPrefs.HasKey("TimeClosed"))
-        {
-            petHunger = OfflineCalculations(petHunger);
-            petHappiness = OfflineCalculations(petHappiness);
-        }
-        PlayPetExpression();
-        Debug.Log("Pet Hunger: " + petHunger);
-        Debug.Log("Pet Happiness: " + petHappiness);
-        food.SetFoodTxt();
-        SetShopTxt();
-        UpdateText();
-        #endregion
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (petHappiness <= 0)
+        if(SceneManager.GetActiveScene().name == "main")
         {
-            petHappiness = 0;
-        }
-        else if (petHappiness >= 1)
-        {
-            petHappiness = 1;
-        }
-        if (petHunger <= 0)
-        {
-            petHunger = 0;
-        }
-        else if (petHunger >= 1)
-        {
-            petHunger = 1;
-        }
+            if (petHappiness <= 0)
+            {
+                petHappiness = 0;
+            }
+            else if (petHappiness >= 1)
+            {
+                petHappiness = 1;
+            }
+            if (petHunger <= 0)
+            {
+                petHunger = 0;
+            }
+            else if (petHunger >= 1)
+            {
+                petHunger = 1;
+            }
 
-        if (petHappiness <= 0.3f || petHunger <= 0.3f)
-        {
-            SetSad();
-        }
-        else
-        {
-            SetPet();
-        }
+            if (petHappiness <= 0.3f || petHunger <= 0.3f)
+            {
+                SetSad();
+            }
+            else
+            {
+                SetPet();
+            }
 
-        UpdateText();
+            UpdateText();
+        }
     }
 
     public void OnApplicationQuit()
