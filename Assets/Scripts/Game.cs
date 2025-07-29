@@ -198,6 +198,11 @@ public class Game : MonoBehaviour
         Save();
     }
 
+    public void OnApplicationPause()
+    {
+        Save();
+    }
+
     float OfflineCalculations(float input)
     {
         Debug.Log("Offline Calculations is running");
