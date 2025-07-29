@@ -1103,6 +1103,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 649782673}
   m_CullTransparentMesh: 1
+<<<<<<< Updated upstream
+=======
+--- !u!114 &649782678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649782673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24532d4891254af4eb8069eede4fec12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  game: {fileID: 311139157}
+  freePachinkoGame: 0
+  buttonImage: {fileID: 649782676}
+  buttonSprites:
+  - {fileID: 21300000, guid: 2cfa1fb6533929e4d9269111a515d724, type: 3}
+  - {fileID: 21300000, guid: ab79289bba4e56049a1c3b97ce57d3e2, type: 3}
+>>>>>>> Stashed changes
 --- !u!1 &685318769
 GameObject:
   m_ObjectHideFlags: 0
