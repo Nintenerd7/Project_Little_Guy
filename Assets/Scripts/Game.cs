@@ -10,18 +10,47 @@ public class Game : MonoBehaviour
     public float petHappiness;
     public TMP_Text petHungerTxt;
     public TMP_Text petHappinessTxt;
+    public TMP_Text coinsTxt;
+    public TMP_Text shopCoinsTxt;
+    public TMP_Text description;
     public TextPrint textPrint;
     [SerializeField] GameObject pet;
     public int petType;
     public Sprite[] happyPets;
     public Sprite[] sadPets;
+    public int coins;
+
+    //Shop Stuff
+    [SerializeField] GameObject shop;
+    [SerializeField] GameObject mainUI;
+
+    //Food Stuff
+    [SerializeField] Food food;
+    [SerializeField] GameObject foodInv;
+    public TMP_Text[] shopHungerPercent;
+    public TMP_Text[] shopMoodPercent;
+    public TMP_Text[] shopCost;
 
     //Animation Stuff
     Animator petExpression;
+    Animator shopTransitions;
+    Animator foodTransitions;
     // Start is called before the first frame update
     void Start()
     {
+        #region load pet type
+        if(PlayerPrefs.HasKey("Coins"))
+        {
+            int savedCoins = PlayerPrefs.GetInt("Coins");
+            coins = savedCoins;
+        }
+        else
+        {
+            coins = 100;
+        }
         petExpression = pet.GetComponent<Animator>();
+        shopTransitions = shop.GetComponent<Animator>();
+        foodTransitions = foodInv.GetComponent<Animator>();
         if (PlayerPrefs.HasKey("PetType"))
         {
             int savedType = PlayerPrefs.GetInt("PetType");
@@ -33,7 +62,51 @@ public class Game : MonoBehaviour
             petType = 0;
             SetPet();
         }
+        #endregion
         #region load pet happiness and hunger
+        #region load foods
+        if(PlayerPrefs.HasKey("Pancakes"))
+        {
+            int savedPancakes = PlayerPrefs.GetInt("Pancakes");
+            food.foodsOwned[0] = savedPancakes;
+        }
+        else
+        {
+            food.foodsOwned[0] = 5;
+        }
+
+        if(PlayerPrefs.HasKey("Popcorn"))
+        {
+            int savedPopcorn = PlayerPrefs.GetInt("Popcorn");
+            food.foodsOwned[1] = savedPopcorn;
+        }
+        else
+        {
+            food.foodsOwned[1] = 5;
+        }
+
+        if(PlayerPrefs.HasKey("Slush"))
+        {
+            int savedSlush = PlayerPrefs.GetInt("Slush");
+            food.foodsOwned[2] = savedSlush;
+        }
+        else
+        {
+            food.foodsOwned[2] = 0;
+        }
+
+        if(PlayerPrefs.HasKey("Sundae"))
+        {
+            int savedSundae = PlayerPrefs.GetInt("Sundae");
+            food.foodsOwned[3] = savedSundae;
+        }
+
+        else
+        {
+            food.foodsOwned[3] = 0;
+        }
+
+        #endregion
         if (PlayerPrefs.HasKey("PetHappiness"))
         {
             float savedHappiness = PlayerPrefs.GetFloat("PetHappiness");
@@ -62,6 +135,8 @@ public class Game : MonoBehaviour
         PlayPetExpression();
         Debug.Log("Pet Hunger: " + petHunger);
         Debug.Log("Pet Happiness: " + petHappiness);
+        food.SetFoodTxt();
+        SetShopTxt();
         UpdateText();
         #endregion
     }
@@ -104,6 +179,11 @@ public class Game : MonoBehaviour
         PlayerPrefs.SetFloat("PetHunger", petHunger);
         PlayerPrefs.SetFloat("PetHappiness", petHappiness);
         PlayerPrefs.SetInt("PetType", petType);
+        PlayerPrefs.SetInt("Coins", coins);
+        PlayerPrefs.SetInt("Pancakes", food.foodsOwned[0]);
+        PlayerPrefs.SetInt("Popcorn", food.foodsOwned[1]);
+        PlayerPrefs.SetInt("Slush", food.foodsOwned[2]);
+        PlayerPrefs.SetInt("Sundae", food.foodsOwned[3]);
         PlayerPrefs.Save();
     }
 
@@ -119,18 +199,21 @@ public class Game : MonoBehaviour
 
     public void FoodButton()
     {
-        petHunger += 0.25f;
-        petHappiness += 0.1f;
-        Debug.Log("Pet Hunger: " + petHunger);
-        Debug.Log("Pet Happiness: " + petHappiness);
-        petHappinessTxt.text = "Pet Mood: " + (Mathf.Round(petHappiness * 100)).ToString() + "%";
-        petHungerTxt.text = "Pet Hunger: " + (Mathf.Round(petHunger * 100)).ToString() + "%";
+        //petHunger += 0.25f;
+        //petHappiness += 0.1f;
+        //Debug.Log("Pet Hunger: " + petHunger);
+        //Debug.Log("Pet Happiness: " + petHappiness);
+        //petHappinessTxt.text = (Mathf.Round(petHappiness * 100)).ToString() + "%";
+        //petHungerTxt.text = (Mathf.Round(petHunger * 100)).ToString() + "%";
+        OpenFood();
     }
 
     void UpdateText()
     {
-        petHappinessTxt.text = "Pet Mood: " + (Mathf.Round(petHappiness * 100)).ToString() + "%";
-        petHungerTxt.text = "Pet Hunger: " + (Mathf.Round(petHunger * 100)).ToString() + "%";
+        petHappinessTxt.text = (Mathf.Round(petHappiness * 100)).ToString() + "%";
+        petHungerTxt.text = (Mathf.Round(petHunger * 100)).ToString() + "%";
+        coinsTxt.text = coins.ToString();
+        shopCoinsTxt.text = coins.ToString();
     }
     void PlayPetExpression()
     {
@@ -207,6 +290,52 @@ public class Game : MonoBehaviour
             case 5:
                 pet.GetComponent<SpriteRenderer>().sprite = sadPets[5];
                 break;
+        }
+    }
+
+    public void OpenShop()
+    {
+        mainUI.SetActive(false);
+        description.text = "";
+        shopTransitions.SetBool("isShopOpen", true);
+        shopTransitions.SetBool("isShopClosed", false);
+        SetShopTxt();
+        mainUI.SetActive(false);
+    }
+
+    public void CloseShop()
+    {
+        mainUI.SetActive(true);
+        shopTransitions.SetBool("isShopOpen", false);
+        shopTransitions.SetBool("isShopClosed", true);
+    }
+
+    public void OpenFood()
+    {
+        mainUI.SetActive(false);
+        description.text = "";
+        foodTransitions.SetBool("isInvOpen", true);
+        foodTransitions.SetBool("isInvClosed", false);
+        food.SetFoodTxt();
+    }
+
+    public void CloseFood()
+    {
+        food.SetFoodTxt();
+        mainUI.SetActive(true);
+        foodTransitions.SetBool("isInvOpen", false);
+        foodTransitions.SetBool("isInvClosed", true);
+    }
+
+    public void SetShopTxt()
+    {
+        Debug.Log("Setting Shop Shit");
+        for(int i = 0; i <= food.foodsOwned.Length - 1; i++)
+        {
+            Debug.Log("i = " + i);
+            shopHungerPercent[i].text = (Mathf.Round(food.hungerRecovery[i] * 100)).ToString() + "%";
+            shopMoodPercent[i].text = (Mathf.Round(food.moodRecovery[i] * 100)).ToString() + "%";
+            shopCost[i].text = food.cost[i].ToString();
         }
     }
 }
