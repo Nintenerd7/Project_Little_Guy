@@ -24,7 +24,7 @@ public class ButtonIDs : MonoBehaviour
 
     public void FeedPet()
     {
-        if(food.foodsOwned[buttonID] >= 1)
+        if(food.foodsOwned[buttonID] >= 1 && game.petHappiness <= 0.99f && game.petHunger <= 0.99f)
         {
             game.petHappiness += food.moodRecovery[buttonID];
             game.petHunger += food.hungerRecovery[buttonID];

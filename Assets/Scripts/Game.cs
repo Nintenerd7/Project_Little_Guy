@@ -43,7 +43,6 @@ public class Game : MonoBehaviour
         {
             int savedCoins = PlayerPrefs.GetInt("Coins");
             coins = savedCoins;
-            coins = 6000;
         }
         else
         {
