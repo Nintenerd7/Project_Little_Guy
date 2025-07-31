@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Map_Randomizer : MonoBehaviour
 {
-    public GameObject[] MapIndex = new GameObject[2];
+    public GameObject[] MapIndex = new GameObject[2];//contains two of the pachinko maps
 
     // Update is called once per frame
     void Start()
     {
-        int Randomizer = Random.Range(0, 5);  
+        int Randomizer = Random.Range(0, 5);  //randomizes maps
 
         if(Randomizer <= 2)
         {
