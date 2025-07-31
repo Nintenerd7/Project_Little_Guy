@@ -21,6 +21,7 @@ public class Map_Randomizer : MonoBehaviour
             MapIndex[0].SetActive(false);
             MapIndex[1].SetActive(true);
         }
+        
 
         Debug.Log(Randomizer);
     }

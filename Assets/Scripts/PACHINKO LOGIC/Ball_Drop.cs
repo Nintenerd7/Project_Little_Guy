@@ -22,6 +22,7 @@ public class Ball_Drop : MonoBehaviour
         {
             Instantiate(Ball, DropPos.position, DropPos.rotation);//Ball Spawns
             FreeTurn = false;//player has used up their turn
+            AudioSourceController.Instance.PlaySFX("Fall");//plays the fall sound
         }//END OF IF INPUT STATEMENT 
     }
 

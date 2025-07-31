@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 533842823602165659}
   - component: {fileID: 2022951738285583759}
   - component: {fileID: 2344724129123387554}
+  - component: {fileID: -8304765013645643388}
   m_Layer: 0
   m_Name: Pin_Ball
   m_TagString: Untagged
@@ -163,3 +164,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   game: {fileID: 0}
   gameManager: {fileID: 112034318048276564, guid: ad27be839a0703049ad1bc91209171dd, type: 3}
+--- !u!114 &-8304765013645643388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329387764285447002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141b0d1704697a043834a0cf01d88481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
