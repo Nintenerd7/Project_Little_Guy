@@ -17,6 +17,7 @@ public class Pet_Interaction : MonoBehaviour
     public IEnumerator Headpat()
     {
         HideButtons();//hides buttons
+        AudioSourceController.Instance.PlaySFX("Pat");//plays pat sound effect
         hand.SetActive(true);//headpats are there 
         yield return new WaitForSeconds(1);//waits for 1 second
         Game_Manager.petHappiness += 0.5f;//Adds happiness (WHICH WORRKS YIPPEE!!)

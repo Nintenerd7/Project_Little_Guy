@@ -812,6 +812,8 @@ MonoBehaviour:
     SoundClip: {fileID: 8300000, guid: 7619860417a19864f97351cc35331b16, type: 3}
   - Sound_Name: Happy
     SoundClip: {fileID: 8300000, guid: 3a3eab2f0877d5347877a0844688613e, type: 3}
+  - Sound_Name: Pat
+    SoundClip: {fileID: 8300000, guid: cdb2608bfd24ac241a27259f494d79b4, type: 3}
   SFX_Src: {fileID: 1991883944}
 --- !u!4 &1430449044
 Transform:
