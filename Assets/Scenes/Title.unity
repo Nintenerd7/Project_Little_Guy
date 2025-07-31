@@ -808,6 +808,10 @@ MonoBehaviour:
     SoundClip: {fileID: 8300000, guid: a9287cf05d4ba3640b5da68430fa9bb8, type: 3}
   - Sound_Name: Fall
     SoundClip: {fileID: 8300000, guid: 8e743082e45ad96478f04561ba0b5f2b, type: 3}
+  - Sound_Name: Sad
+    SoundClip: {fileID: 8300000, guid: 7619860417a19864f97351cc35331b16, type: 3}
+  - Sound_Name: Happy
+    SoundClip: {fileID: 8300000, guid: 3a3eab2f0877d5347877a0844688613e, type: 3}
   SFX_Src: {fileID: 1991883944}
 --- !u!4 &1430449044
 Transform:

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Pet_Interaction : MonoBehaviour
 {
-    public GameObject[] Hidden_Elements = new GameObject[4];
-    public GameObject hand;
-    public Game Game_Manager;
+    public GameObject[] Hidden_Elements = new GameObject[4];//holds list of buttons needing to be hidden
+    public GameObject hand;//Headpat gameobject
+    public Game Game_Manager;//getting the pet happiness value.
 
     public void HeadpatButton()
     {
         StartCoroutine(Headpat());//player gives headpats to the pet.
-        Debug.Log("*Pat Pat*");
+        Debug.Log("*Pat Pat*");//signifies your caring for your pet in console
     }
 
     public IEnumerator Headpat()
@@ -19,12 +19,13 @@ public class Pet_Interaction : MonoBehaviour
         HideButtons();//hides buttons
         hand.SetActive(true);//headpats are there 
         yield return new WaitForSeconds(1);//waits for 1 second
-        //possible update to happiness here
+        Game_Manager.petHappiness += 0.5f;//Adds happiness (WHICH WORRKS YIPPEE!!)
         hand.SetActive(false);//headpats are not there.
         ShowButtons();//shows buttons
     }
 
-    //sets buttons to false
+    #region VISIBILITY METHODS
+    //sets buttons visibility to false
     public void HideButtons()
     {
       Hidden_Elements[0].SetActive(false);
@@ -32,7 +33,7 @@ public class Pet_Interaction : MonoBehaviour
       Hidden_Elements[2].SetActive(false);
       Hidden_Elements[3].SetActive(false);
     }
-    //sets buttons to true
+    //sets buttons visibility to true
     public void ShowButtons()
     {
         Hidden_Elements[0].SetActive(true);
@@ -40,5 +41,6 @@ public class Pet_Interaction : MonoBehaviour
         Hidden_Elements[2].SetActive(true);
         Hidden_Elements[3].SetActive(true);
     }
+    #endregion
 }
 

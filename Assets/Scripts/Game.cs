@@ -235,6 +235,7 @@ public class Game : MonoBehaviour
     {
         if (petHappiness >= 0.8f || petHunger >= 0.8f)
         {
+            AudioSourceController.Instance.PlaySFX("Happy");//plays happy sound effect
             petExpression.SetBool("isHappy", true);
             petExpression.SetBool("isSad", false);
             textPrint.typingText = textPrint.phrases[0];
@@ -243,6 +244,7 @@ public class Game : MonoBehaviour
         }
         else if (petHappiness <= 0.3f || petHunger <= 0.3f)
         {
+            AudioSourceController.Instance.PlaySFX("Sad"); //play sad sound effect
             petExpression.SetBool("isHappy", false);
             petExpression.SetBool("isSad", true);
             textPrint.typingText = textPrint.phrases[2];

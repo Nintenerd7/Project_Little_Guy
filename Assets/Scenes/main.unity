@@ -1243,7 +1243,7 @@ MonoBehaviour:
   - {fileID: 1465919076}
   - {fileID: 621413489}
   hand: {fileID: 1598057800}
-  Game_Manager: {fileID: 0}
+  Game_Manager: {fileID: 311139157}
 --- !u!224 &258797355
 RectTransform:
   m_ObjectHideFlags: 0
