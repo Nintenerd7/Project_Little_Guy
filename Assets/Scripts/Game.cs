@@ -20,6 +20,7 @@ public class Game : MonoBehaviour
     public Sprite[] happyPets;
     public Sprite[] sadPets;
     public int coins;
+    private bool loadedInPachi = false;
 
     //Shop Stuff
     [SerializeField] GameObject shop;
@@ -40,97 +41,17 @@ public class Game : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        petExpression = pet.GetComponent<Animator>();
+        shopTransitions = shop.GetComponent<Animator>();
+        foodTransitions = foodInv.GetComponent<Animator>();
+        LoadCoins();
+        LoadPet();
+        LoadFood();
+        petHappiness = LoadHappiness();
+        petHunger = LoadHunger();
+        #region Pet hunger while offline
         if(SceneManager.GetActiveScene().name == "main")
         {
-            #region load pet type
-            if(PlayerPrefs.HasKey("Coins"))
-            {
-                int savedCoins = PlayerPrefs.GetInt("Coins");
-                coins = savedCoins;
-            }
-            else
-            {
-                coins = 100;
-            }
-            petExpression = pet.GetComponent<Animator>();
-            shopTransitions = shop.GetComponent<Animator>();
-            foodTransitions = foodInv.GetComponent<Animator>();
-            if (PlayerPrefs.HasKey("PetType"))
-            {
-                int savedType = PlayerPrefs.GetInt("PetType");
-                petType = savedType;
-                SetPet();
-            }
-            else
-            {
-                petType = 0;
-                SetPet();
-            }
-            #endregion
-            #region load pet happiness and hunger
-            #region load foods
-            if(PlayerPrefs.HasKey("Pancakes"))
-            {
-                int savedPancakes = PlayerPrefs.GetInt("Pancakes");
-                food.foodsOwned[0] = savedPancakes;
-            }
-            else
-            {
-                food.foodsOwned[0] = 5;
-            }
-
-            if(PlayerPrefs.HasKey("Popcorn"))
-            {
-                int savedPopcorn = PlayerPrefs.GetInt("Popcorn");
-                food.foodsOwned[1] = savedPopcorn;
-            }
-            else
-            {
-                food.foodsOwned[1] = 5;
-            }
-
-            if(PlayerPrefs.HasKey("Slush"))
-            {
-                int savedSlush = PlayerPrefs.GetInt("Slush");
-                food.foodsOwned[2] = savedSlush;
-            }
-            else
-            {
-                food.foodsOwned[2] = 0;
-            }
-
-            if(PlayerPrefs.HasKey("Sundae"))
-            {
-                int savedSundae = PlayerPrefs.GetInt("Sundae");
-                food.foodsOwned[3] = savedSundae;
-            }
-
-            else
-            {
-                food.foodsOwned[3] = 0;
-            }
-
-            #endregion
-            if (PlayerPrefs.HasKey("PetHappiness"))
-            {
-                float savedHappiness = PlayerPrefs.GetFloat("PetHappiness");
-                petHappiness = savedHappiness;
-            }
-            else
-            {
-                petHappiness = 1f;
-            }
-            if (PlayerPrefs.HasKey("PetHunger"))
-            {
-                float savedHunger = PlayerPrefs.GetFloat("PetHunger");
-                petHunger = savedHunger;
-            }
-            else
-            {
-                petHunger = 0.5f;
-            }
-            #endregion
-            #region Pet hunger while offline
             if (PlayerPrefs.HasKey("TimeClosed"))
             {
                 petHunger = OfflineCalculations(petHunger);
@@ -144,18 +65,7 @@ public class Game : MonoBehaviour
             UpdateText();
             #endregion
         }
-        if(SceneManager.GetActiveScene().name == "Pachinko_Game")
-        {
-            if(PlayerPrefs.HasKey("Coins"))
-            {
-                int savedCoins = PlayerPrefs.GetInt("Coins");
-                coins = savedCoins;
-            }
-            else
-            {
-                coins = 100;
-            }
-        }
+
     }
 
     // Update is called once per frame
@@ -190,6 +100,14 @@ public class Game : MonoBehaviour
             }
 
             UpdateText();
+        }
+        if(SceneManager.GetActiveScene().name == "Pachinko_Game" && !loadedInPachi)
+        {
+            LoadCoins();
+            LoadPet();
+            petHappiness = LoadHappiness();
+            petHunger = LoadHunger();
+            loadedInPachi = true;
         }
     }
 
@@ -369,5 +287,107 @@ public class Game : MonoBehaviour
         PlayerPrefs.SetInt("Slush", food.foodsOwned[2]);
         PlayerPrefs.SetInt("Sundae", food.foodsOwned[3]);
         PlayerPrefs.Save();
+    }
+
+    public void LoadCoins()
+    {
+        if(PlayerPrefs.HasKey("Coins"))
+            {
+                int savedCoins = PlayerPrefs.GetInt("Coins");
+                coins = savedCoins;
+            }
+            else
+            {
+                coins = 100;
+            }
+    }
+
+    public void LoadPet()
+    {
+        if (PlayerPrefs.HasKey("PetType"))
+            {
+                int savedType = PlayerPrefs.GetInt("PetType");
+                petType = savedType;
+                if(SceneManager.GetActiveScene().name == "main")
+                {
+                    SetPet();
+                }
+            }
+            else
+            {
+                petType = 0;
+                if(SceneManager.GetActiveScene().name == "main")
+                {
+                    SetPet();
+                }
+            }
+    }
+
+    public float LoadHappiness()
+    {
+        if (PlayerPrefs.HasKey("PetHappiness"))
+            {
+                float savedHappiness = PlayerPrefs.GetFloat("PetHappiness");
+                petHappiness = savedHappiness;
+            }
+            else
+            {
+                petHappiness = 1f;
+            }
+        return petHappiness;
+    }
+
+    public float LoadHunger()
+    {
+        if (PlayerPrefs.HasKey("PetHunger"))
+            {
+                float savedHunger = PlayerPrefs.GetFloat("PetHunger");
+                petHunger = savedHunger;
+            }
+            else
+            {
+                petHunger = 0.5f;
+            }
+        return petHunger;
+    }
+
+    public void LoadFood()
+    {
+        if(PlayerPrefs.HasKey("Pancakes"))
+        {
+            int savedPancakes = PlayerPrefs.GetInt("Pancakes");
+            food.foodsOwned[0] = savedPancakes;
+        }
+        else
+        {
+            food.foodsOwned[0] = 5;
+        }
+        if(PlayerPrefs.HasKey("Popcorn"))
+        {
+            int savedPopcorn = PlayerPrefs.GetInt("Popcorn");
+            food.foodsOwned[1] = savedPopcorn;
+        }
+        else
+        {
+            food.foodsOwned[1] = 5;
+        }
+        if(PlayerPrefs.HasKey("Slush"))
+        {
+            int savedSlush = PlayerPrefs.GetInt("Slush");
+            food.foodsOwned[2] = savedSlush;
+        }
+        else
+        {
+            food.foodsOwned[2] = 0;
+        }
+        if(PlayerPrefs.HasKey("Sundae"))
+        {
+            int savedSundae = PlayerPrefs.GetInt("Sundae");
+            food.foodsOwned[3] = savedSundae;
+        }
+        else
+        {
+            food.foodsOwned[3] = 0;
+        }
     }
 }
