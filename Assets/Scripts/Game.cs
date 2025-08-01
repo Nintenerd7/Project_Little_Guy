@@ -20,6 +20,8 @@ public class Game : MonoBehaviour
     public Sprite[] happyPets;
     public Sprite[] sadPets;
     public int coins;
+    public bool hasOpenedDaily;
+    public GameObject dailyGift;
     private bool loadedInPachi = false;
 
     //Shop Stuff
@@ -56,6 +58,22 @@ public class Game : MonoBehaviour
             {
                 petHunger = OfflineCalculations(petHunger);
                 petHappiness = OfflineCalculations(petHappiness);
+            }
+            if (PlayerPrefs.HasKey("OpenedDailyTime"))
+            {
+                hasOpenedDaily = CheckDaily();
+                if(hasOpenedDaily)
+                {
+                    dailyGift.SetActive(false);
+                }
+                else
+                {
+                    dailyGift.SetActive(true);
+                }
+            }
+            else
+            {
+                hasOpenedDaily = false;
             }
             PlayPetExpression();
             Debug.Log("Pet Hunger: " + petHunger);
@@ -419,5 +437,43 @@ public class Game : MonoBehaviour
     {
         petExpression.SetBool("isHappy", false);
         petExpression.SetBool("isSad", false);
+    }
+
+    void ShowDailyGift()
+    {
+            hasOpenedDaily = CheckDaily();
+            if(!hasOpenedDaily)
+            {
+                dailyGift.SetActive(true);
+            }
+            else
+            {
+                dailyGift.SetActive(false);
+            }
+    }
+
+    bool CheckDaily()
+    {
+        string savedOpenedTime = PlayerPrefs.GetString("OpenedDailyTime");
+        DateTime dailyOpenedTime = DateTime.Parse(savedOpenedTime);
+        TimeSpan timeChange = DateTime.Now - dailyOpenedTime;
+        if((float)timeChange.TotalHours >= 24)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public void OpenDaily()
+    {
+        coins += 50;
+        PlayerPrefs.SetString("OpenedDailyTime", DateTime.Now.ToString());
+        PlayerPrefs.Save();
+        dailyGift.SetActive(false);
+        hasOpenedDaily = true;
+        Save();
     }
 }
