@@ -163,18 +163,14 @@ public class Game : MonoBehaviour
     {
         if (petHappiness >= 0.8f || petHunger >= 0.8f)
         {
-            AudioSourceController.Instance.PlaySFX("Happy");//plays happy sound effect
-            petExpression.SetBool("isHappy", true);
-            petExpression.SetBool("isSad", false);
+            PlayHappyExpression();
             textPrint.typingText = textPrint.phrases[0];
             SetPet();
             textPrint.PrintText();
         }
         else if (petHappiness <= 0.3f || petHunger <= 0.3f)
         {
-            AudioSourceController.Instance.PlaySFX("Sad"); //play sad sound effect
-            petExpression.SetBool("isHappy", false);
-            petExpression.SetBool("isSad", true);
+            PlaySadExpression();
             textPrint.typingText = textPrint.phrases[2];
             SetSad();
             textPrint.PrintText();
@@ -403,5 +399,25 @@ public class Game : MonoBehaviour
         {
             food.foodsOwned[3] = 0;
         }
+    }
+
+    public void PlayHappyExpression()
+    {
+        AudioSourceController.Instance.PlaySFX("Happy");//plays happy sound effect
+        petExpression.SetBool("isHappy", true);
+        petExpression.SetBool("isSad", false);
+    }
+
+    public void PlaySadExpression()
+    {
+        AudioSourceController.Instance.PlaySFX("Sad"); //play sad sound effect
+        petExpression.SetBool("isHappy", false);
+        petExpression.SetBool("isSad", true);
+    }
+
+    public void ResetExpression()
+    {
+        petExpression.SetBool("isHappy", false);
+        petExpression.SetBool("isSad", false);
     }
 }

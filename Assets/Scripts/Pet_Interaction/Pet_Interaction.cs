@@ -17,6 +17,7 @@ public class Pet_Interaction : MonoBehaviour
     public IEnumerator Headpat()
     {
         HideButtons();//hides buttons
+        Game_Manager.ResetExpression();
         AudioSourceController.Instance.PlaySFX("Pat");//plays pat sound effect
         hand.SetActive(true);//headpats are there 
         yield return new WaitForSeconds(1);//waits for 1 second
@@ -24,6 +25,7 @@ public class Pet_Interaction : MonoBehaviour
         hand.SetActive(false);//headpats are not there.
         ShowButtons();//shows buttons
         Game_Manager.Save();
+        Game_Manager.PlayHappyExpression();
     }
 
     #region VISIBILITY METHODS
