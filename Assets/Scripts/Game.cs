@@ -121,6 +121,15 @@ public class Game : MonoBehaviour
         Save();
     }
 
+    public void OnApplicationFocus(bool hasFocus)
+    {
+        if(!hasFocus)
+        {
+            Save();
+        }
+
+    }
+
     float OfflineCalculations(float input)
     {
         Debug.Log("Offline Calculations is running");
@@ -128,7 +137,7 @@ public class Game : MonoBehaviour
         DateTime timeClosed = DateTime.Parse(timeSaved);
         Debug.Log("Parsed Time: " + timeClosed);
         TimeSpan timeChange = DateTime.Now - timeClosed;
-        return input -= (float)timeChange.TotalHours / 10;
+        return input -= (float)timeChange.TotalHours / 20;
     }
 
     public void FoodButton()
