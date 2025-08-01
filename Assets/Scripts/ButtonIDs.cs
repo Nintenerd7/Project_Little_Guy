@@ -32,6 +32,7 @@ public class ButtonIDs : MonoBehaviour
             food.foodsOwned[buttonID]--;
         }
         food.SetFoodTxt();
+        game.Save();
     }
 
     public void BuyItem()
@@ -43,5 +44,6 @@ public class ButtonIDs : MonoBehaviour
             game.coins -= food.cost[buttonID];
         }
         game.SetShopTxt();
+        game.Save();
     }
 }

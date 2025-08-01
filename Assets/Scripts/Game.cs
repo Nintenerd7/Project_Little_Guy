@@ -149,6 +149,7 @@ public class Game : MonoBehaviour
         //petHappinessTxt.text = (Mathf.Round(petHappiness * 100)).ToString() + "%";
         //petHungerTxt.text = (Mathf.Round(petHunger * 100)).ToString() + "%";
         OpenFood();
+        Save();
     }
 
     void UpdateText()
@@ -246,6 +247,7 @@ public class Game : MonoBehaviour
         shopTransitions.SetBool("isShopClosed", false);
         SetShopTxt();
         mainUI.SetActive(false);
+        Save();
     }
 
     public void CloseShop()
@@ -253,6 +255,7 @@ public class Game : MonoBehaviour
         mainUI.SetActive(true);
         shopTransitions.SetBool("isShopOpen", false);
         shopTransitions.SetBool("isShopClosed", true);
+        Save();
     }
 
     public void OpenFood()
@@ -262,6 +265,7 @@ public class Game : MonoBehaviour
         foodTransitions.SetBool("isInvOpen", true);
         foodTransitions.SetBool("isInvClosed", false);
         food.SetFoodTxt();
+        Save();
     }
 
     public void CloseFood()
@@ -270,6 +274,7 @@ public class Game : MonoBehaviour
         mainUI.SetActive(true);
         foodTransitions.SetBool("isInvOpen", false);
         foodTransitions.SetBool("isInvClosed", true);
+        Save();
     }
 
     public void SetShopTxt()

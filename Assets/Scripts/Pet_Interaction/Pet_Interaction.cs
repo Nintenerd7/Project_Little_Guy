@@ -23,6 +23,7 @@ public class Pet_Interaction : MonoBehaviour
         Game_Manager.petHappiness += 0.05f;//Adds happiness (WHICH WORRKS YIPPEE!!)
         hand.SetActive(false);//headpats are not there.
         ShowButtons();//shows buttons
+        Game_Manager.Save();
     }
 
     #region VISIBILITY METHODS
