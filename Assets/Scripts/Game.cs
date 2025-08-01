@@ -469,6 +469,7 @@ public class Game : MonoBehaviour
 
     public void OpenDaily()
     {
+        AudioSourceController.Instance.PlaySFX("Coin");
         coins += 50;
         PlayerPrefs.SetString("OpenedDailyTime", DateTime.Now.ToString());
         PlayerPrefs.Save();
